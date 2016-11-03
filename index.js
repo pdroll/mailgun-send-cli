@@ -19,7 +19,7 @@ var mail = mailcomposer({
 	from: from,
 	to: argv.to,
 	subject: subject,
-	body: 'Test email sned',
+	body: 'Test email Send',
 	html: htmlEmail
 });
 
@@ -35,6 +35,6 @@ mail.build(function(mailBuildError, message) {
 			console.log(sendError);
 			return;
 		}
-		console.log('Successfull sent to ' +  argv.to);
+		console.log('Successful sent to ' +  argv.to);
 	});
 });
