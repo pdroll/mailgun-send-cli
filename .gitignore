@@ -1,3 +1,5 @@
 creds.json
 emails/*
 !emails/.gitkeep
+node_modules
+npm-debug.log*
