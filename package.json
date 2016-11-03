@@ -1,0 +1,16 @@
+{
+  "name": "email-sender",
+  "version": "1.0.0",
+  "description": "Mailgun API wrapper to send HTML emails",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mailcomposer": "^3.7.0",
+    "mailgun-js": "^0.7.8",
+    "minimist": "^1.2.0"
+  }
+}
