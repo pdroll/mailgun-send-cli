@@ -1,2 +1,3 @@
 creds.json
 emails/*
+!emails/.gitkeep
