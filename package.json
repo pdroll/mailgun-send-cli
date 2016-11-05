@@ -2,12 +2,15 @@
   "name": "mailgun-send-cli",
   "version": "0.1.0",
   "description": "Quickly send HTML emails from the command line using the Mailgun [http://www.mailgun.com/] API.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "author": "Pete Droll <droll.p@gmail.com> (https://github.com/pdroll/)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pdroll/@TODO"
   },
-  "author": "",
-  "license": "ISC",
+  "license": "WTFPL",
+  "main": "./lib/MailgunSend.js",
+  "bin":  "./bin/mailgun-send-cli.js",
+  "preferGlobal": true,
   "dependencies": {
     "commander": "^2.9.0",
     "keytar": "^3.0.2",

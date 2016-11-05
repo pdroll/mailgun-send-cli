@@ -5,8 +5,8 @@
 const program = require('commander');
 const keytar = require('keytar');
 const readlineSync = require('readline-sync');
-const MailgunSend = require('./lib/MailgunSend');
-const packageJson = require('./package.json');
+const MailgunSend = require('../lib/MailgunSend');
+const packageJson = require('../package.json');
 
 /**
  * Configure Program options and parse arguments
