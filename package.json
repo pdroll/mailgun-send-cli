@@ -1,7 +1,7 @@
 {
-  "name": "email-sender",
-  "version": "1.0.0",
-  "description": "Mailgun API wrapper to send HTML emails",
+  "name": "mailgun-send-cli",
+  "version": "0.1.0",
+  "description": "Quickly send HTML emails from the command line using the Mailgun [http://www.mailgun.com/] API.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,8 +9,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "commander": "^2.9.0",
+    "keytar": "^3.0.2",
     "mailcomposer": "^3.7.0",
     "mailgun-js": "^0.7.8",
-    "minimist": "^1.2.0"
+    "readline-sync": "^1.4.5",
+    "validate.js": "^0.10.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.9.1",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-plugin-import": "^1.16.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.5.0"
   }
 }

@@ -1,40 +1,67 @@
-var creds = require('./creds.json');
-var mailgun = require('mailgun-js')({apiKey: creds.mailgun.apikey, domain: creds.mailgun.domain});
-var mailcomposer = require('mailcomposer');
-var argv = require('minimist')(process.argv.slice(2));
-var fs = require('fs');
-var htmlEmail = '';
+#!/usr/bin/env node
 
-// Fetch HTML Email based on args
-if(argv.emailname) {
-	htmlEmail = fs.readFileSync('./emails/' + argv.emailname + '.html', 'utf8');
-} else if(argv.emailpath) {
-	htmlEmail = fs.readFileSync( argv.emailpath , 'utf8');
+'use strict';
+
+const program = require('commander');
+const keytar = require('keytar');
+const readlineSync = require('readline-sync');
+const MailgunSend = require('./lib/MailgunSend');
+const packageJson = require('./package.json');
+
+/**
+ * Configure Program options and parse arguments
+ */
+program
+  .version(packageJson.version)
+  .usage('You will be prompted to enter your Mailgun API Key [https://mailgun.com/app/account/security] and Domain [https://mailgun.com/app/domains] on your first use.')
+  .option('-s, --subject <value>', 'Subject of Email')
+  .option('-t, --to <value>', 'Email address of recipient of email')
+  .option('-f, --from <value>', 'Email address of email sender')
+  .option('-T, --text <value>', 'Text to send as body of email. Must specify this or --htmlpath.')
+  .option('-H, --htmlpath <value>', 'Path to HTML file to send as email. Must specify this or --text.')
+  .option('-R, --reset', 'Reset Mailgun API key and Domain. You will be prompted to enter these again.')
+  .parse(process.argv);
+
+/**
+ * Get/Set Mailgun creds from keychain.
+ * Prompt user for them if they are not found.
+ */
+if (program.reset) {
+  keytar.deletePassword(packageJson.name, 'apiKey');
+  keytar.deletePassword(packageJson.name, 'domain');
 }
 
-var from = argv.from || 'droll.p@gmail.com';
-var subject = argv.subject || 'Test Email Send';
+let apiKey = keytar.getPassword(packageJson.name, 'apiKey');
+let domain = keytar.getPassword(packageJson.name, 'domain');
 
-var mail = mailcomposer({
-	from: from,
-	to: argv.to,
-	subject: subject,
-	body: 'Test email Send',
-	html: htmlEmail
+if (!domain) {
+  domain = readlineSync.question('Mailgun Domain (e.g. mg.example.com): ');
+  keytar.replacePassword(packageJson.name, 'domain', domain);
+}
+
+if (!apiKey) {
+  apiKey = readlineSync.question('Mailgun API (e.g. key-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX): ', {
+    hideEchoBack: true,
+  });
+  keytar.replacePassword(packageJson.name, 'apiKey', apiKey);
+}
+
+/**
+ * Attempt to send email
+ */
+const mg = new MailgunSend({ apiKey, domain });
+
+mg.send({
+  subject: program.subject,
+  to: program.to,
+  from: program.from,
+  text: program.text,
+  htmlpath: program.htmlpath,
+}).then((msg) => {
+  console.log(`\n✅  Success!\n\t${msg}`);
+}).catch((e) => {
+  // Remove extraneous 'Error:' if present
+  const errMsg = `${e}`.replace('Error:', '');
+  console.log(`\n🚨  Error:${errMsg}\n`);
 });
 
-mail.build(function(mailBuildError, message) {
-
-	var dataToSend = {
-		to: argv.to,
-		message: message.toString('ascii')
-	};
-
-	mailgun.messages().sendMime(dataToSend, function (sendError, body) {
-		if (sendError) {
-			console.log(sendError);
-			return;
-		}
-		console.log('Successful sent to ' +  argv.to);
-	});
-});
