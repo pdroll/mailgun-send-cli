@@ -5,7 +5,7 @@
   "author": "Pete Droll <droll.p@gmail.com> (https://github.com/pdroll/)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pdroll/@TODO"
+    "url": "https://github.com/pdroll/mailgun-send-cli"
   },
   "license": "WTFPL",
   "main": "./lib/MailgunSend.js",
