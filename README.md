@@ -16,6 +16,20 @@ mailgun-send [options]
 
 You will be prompted to enter your Mailgun [API Key](https://mailgun.com/app/account/security) and [domain](https://mailgun.com/app/domains) on your first use. These values will be used on every subsequent call until the `--reset` flag is used to reset them.
 
+### Examples
+
+Plain text email:
+
+```
+mailgun-send -f me@example.com -t you@example.com -s 'Email sent via Mailgun from the command line' -T 'Hello there! The mailgun-send-cli tool is really cool. You should check it out!'
+```
+
+HTML email:
+
+```
+mailgun-send -f me@example.com -t you@example.com -s 'HTML Email sent via Mailgun from the command line' -H ~/path/to/html/file.html
+```
+
 ### Options
 
 ####`-s, --subject <value>`
@@ -42,19 +56,6 @@ Output usage information
 #### `-V, --version`
 Output the version number
 
-## Examples
-
-Plain text email:
-
-```
-mailgun-send -f me@example.com -t you@example.com -s 'Email sent via Mailgun from the command line' -T 'Hello there! The mailgun-send-cli tool is really cool. You should check it out!'
-```
-
-HTML email:
-
-```
-mailgun-send -f me@example.com -t you@example.com -s 'HTML Email sent via Mailgun from the command line' -H ~/path/to/html/file.html
-```
 
 ## Troubleshooting
 
