@@ -9,8 +9,13 @@
   },
   "license": "WTFPL",
   "main": "./lib/MailgunSend.js",
-  "bin":  "./bin/mailgun-send-cli.js",
+  "bin": {
+    "mailgun-send": "./bin/mailgun-send.js"
+  },
   "preferGlobal": true,
+  "engine": {
+    "node" : ">=4.3.2"
+  },
   "dependencies": {
     "commander": "^2.9.0",
     "keytar": "^3.0.2",
