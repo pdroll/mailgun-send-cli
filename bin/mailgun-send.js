@@ -13,7 +13,8 @@ const packageJson = require('../package.json');
  */
 program
   .version(packageJson.version)
-  .usage(`[options]\n\n  You will be prompted to enter your Mailgun API Key [https://mailgun.com/app/account/security] and Domain [https://mailgun.com/app/domains] on your first use.`)
+  .usage('[options]')
+  .description('You will be prompted to enter your Mailgun API Key [https://mailgun.com/app/account/security] and Domain [https://mailgun.com/app/domains] on your first use.')
   .option('-s, --subject <value>', 'Subject of Email')
   .option('-t, --to <value>', 'Email address of recipient of email')
   .option('-f, --from <value>', 'Email address of email sender')
