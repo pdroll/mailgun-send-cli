@@ -8,6 +8,12 @@ Easily send mail, even HTML emails, from the command line using the Mailgun API.
 npm install mailgun-send-cli -g
 ```
 
+Or if you're using [Yarn](https://yarnpkg.com/):
+
+```
+yarn global add mailgun-send-cli
+```
+
 ## Usage
 
 ```
