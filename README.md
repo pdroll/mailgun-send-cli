@@ -47,6 +47,15 @@ Email address of recipient of email. Required.
 #### `-f, --from <value>`
 Email address of email sender. Required.
 
+#### `-r, --reply <value>`
+ReplyTo email address. Optional.
+
+#### `-c, --cc <value>`
+Email address to CC. Optional.
+
+#### `-b, --bcc <value>`
+Email address to BCC. Optional.
+
 #### `-T, --text <value>`
 Text to send as body of email. Must specify this or `--htmlpath`.
 
@@ -70,7 +79,3 @@ If it says your email was successfully sent, but you don't see the email in your
 Be sure to use a [verified domain](https://documentation.mailgun.com/quickstart-sending.html#verify-your-domain) to remove the "sent via Mailgun.org" message from your emails and increase your monthly free send limit from 300 to 10,000.
 
 See [Mailgun's FAQ's](https://documentation.mailgun.com/faqs.html) for more information.
-
-
-
-
