@@ -1,6 +1,6 @@
 {
   "name": "mailgun-send-cli",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Quickly send HTML emails from the command line using the Mailgun [http://www.mailgun.com/] API.",
   "author": "Pete Droll <droll.p@gmail.com> (https://github.com/pdroll/)",
   "repository": {
