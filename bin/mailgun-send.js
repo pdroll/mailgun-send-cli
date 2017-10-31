@@ -18,6 +18,7 @@ program
   .option('-s, --subject <value>', 'Subject of Email')
   .option('-t, --to <value>', 'Email address of recipient of email')
   .option('-f, --from <value>', 'Email address of email sender')
+  .option('-r, --reply <value>', 'ReplyTo email address. Optional')
   .option('-T, --text <value>', 'Text to send as body of email. Must specify this or --htmlpath.')
   .option('-H, --htmlpath <value>', 'Path to HTML file to send as email. Must specify this or --text.')
   .option('-R, --reset', 'Reset Mailgun API key and Domain. You will be prompted to enter these again.')
@@ -56,6 +57,7 @@ mg.send({
   subject: program.subject,
   to: program.to,
   from: program.from,
+  reply: program.reply,
   text: program.text,
   htmlpath: program.htmlpath,
 }).then((msg) => {
@@ -65,4 +67,3 @@ mg.send({
   const errMsg = `${e}`.replace('Error:', '');
   console.log(`\n🚨  Error:${errMsg}\n`);
 });
-
