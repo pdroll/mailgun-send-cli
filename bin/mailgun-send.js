@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-'use strict';
-
 const program = require('commander');
 const keytar = require('keytar');
 const readlineSync = require('readline-sync');
@@ -26,48 +24,50 @@ program
   .option('-R, --reset', 'Reset Mailgun API key and Domain. You will be prompted to enter these again.')
   .parse(process.argv);
 
-/**
- * Get/Set Mailgun creds from keychain.
- * Prompt user for them if they are not found.
- */
-if (program.reset) {
-  keytar.deletePassword(packageJson.name, 'apiKey');
-  keytar.deletePassword(packageJson.name, 'domain');
-}
+(async () => {
+  /**
+   * Get/Set Mailgun creds from keychain.
+   * Prompt user for them if they are not found.
+   */
+  if (program.reset) {
+    await keytar.deletePassword(packageJson.name, 'apiKey');
+    await keytar.deletePassword(packageJson.name, 'domain');
+  }
 
-let apiKey = keytar.getPassword(packageJson.name, 'apiKey');
-let domain = keytar.getPassword(packageJson.name, 'domain');
+  let apiKey = await keytar.getPassword(packageJson.name, 'apiKey');
+  let domain = await keytar.getPassword(packageJson.name, 'domain');
 
-if (!domain) {
-  domain = readlineSync.question('Mailgun Domain (e.g. mg.example.com): ');
-  keytar.replacePassword(packageJson.name, 'domain', domain);
-}
+  if (!domain) {
+    domain = readlineSync.question('Mailgun Domain (e.g. mg.example.com): ');
+    await keytar.setPassword(packageJson.name, 'domain', domain);
+  }
 
-if (!apiKey) {
-  apiKey = readlineSync.question('Mailgun API (e.g. key-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX): ', {
-    hideEchoBack: true,
+  if (!apiKey) {
+    apiKey = readlineSync.question('Mailgun API (e.g. key-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX): ', {
+      hideEchoBack: true,
+    });
+    await keytar.setPassword(packageJson.name, 'apiKey', apiKey);
+  }
+
+  /**
+   * Attempt to send email
+   */
+  const mg = new MailgunSend({ apiKey, domain });
+
+  mg.send({
+    subject: program.subject,
+    to: program.to,
+    from: program.from,
+    reply: program.reply,
+    cc: program.cc,
+    bcc: program.bcc,
+    text: program.text,
+    htmlpath: program.htmlpath,
+  }).then((msg) => {
+    console.log(`\n✅  Success!\n\t${msg}`);
+  }).catch((e) => {
+    // Remove extraneous 'Error:' if present
+    const errMsg = `${e}`.replace('Error:', '');
+    console.log(`\n🚨  Error:${errMsg}\n`);
   });
-  keytar.replacePassword(packageJson.name, 'apiKey', apiKey);
-}
-
-/**
- * Attempt to send email
- */
-const mg = new MailgunSend({ apiKey, domain });
-
-mg.send({
-  subject: program.subject,
-  to: program.to,
-  from: program.from,
-  reply: program.reply,
-  cc: program.cc,
-  bcc: program.bcc,
-  text: program.text,
-  htmlpath: program.htmlpath,
-}).then((msg) => {
-  console.log(`\n✅  Success!\n\t${msg}`);
-}).catch((e) => {
-  // Remove extraneous 'Error:' if present
-  const errMsg = `${e}`.replace('Error:', '');
-  console.log(`\n🚨  Error:${errMsg}\n`);
-});
+})();

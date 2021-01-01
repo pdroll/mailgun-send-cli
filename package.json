@@ -1,6 +1,6 @@
 {
   "name": "mailgun-send-cli",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "Quickly send HTML emails from the command line using the Mailgun [http://www.mailgun.com/] API.",
   "author": "Pete Droll <droll.p@gmail.com> (https://github.com/pdroll/)",
   "repository": {
@@ -17,16 +17,16 @@
     "node": ">=4.3.2"
   },
   "dependencies": {
-    "commander": "^2.9.0",
-    "keytar": "^3.0.2",
-    "mailcomposer": "^3.7.0",
+    "commander": "^6.2.1",
+    "keytar": "^7.3.0",
+    "mailcomposer": "^4.0.2",
     "mailgun-js": "^0.22.0",
-    "readline-sync": "^1.4.5",
-    "validate.js": "^0.10.0"
+    "readline-sync": "^1.4.10",
+    "validate.js": "^0.13.1"
   },
   "devDependencies": {
-    "eslint": "^3.9.1",
-    "eslint-config-airbnb-base": "^10.0.0",
-    "eslint-plugin-import": "^2.1.0"
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1"
   }
 }
