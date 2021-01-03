@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 
-const program = require('commander');
+const { Command } = require('commander');
 const keytar = require('keytar');
 const readlineSync = require('readline-sync');
 const MailgunSend = require('../lib/MailgunSend');
 const packageJson = require('../package.json');
+
+const program = new Command();
 
 /**
  * Configure Program options and parse arguments

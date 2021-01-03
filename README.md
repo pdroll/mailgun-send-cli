@@ -38,7 +38,7 @@ mailgun-send -f me@example.com -t you@example.com -s 'HTML Email sent via Mailgu
 
 ### Options
 
-####`-s, --subject <value>`
+#### `-s, --subject <value>`
 Subject of Email. Required.
 
 #### `-t, --to <value>`
