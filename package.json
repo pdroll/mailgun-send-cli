@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/pdroll/mailgun-send-cli"
   },
-  "license": "WTFPL",
+  "license": "MIT",
   "main": "./lib/MailgunSend.js",
   "bin": {
     "mailgun-send": "./bin/mailgun-send.js"
