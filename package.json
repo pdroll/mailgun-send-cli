@@ -19,8 +19,8 @@
   "dependencies": {
     "commander": "^6.2.1",
     "keytar": "^7.3.0",
-    "mailcomposer": "^4.0.2",
     "mailgun-js": "^0.22.0",
+    "nodemailer": "^6.4.17",
     "readline-sync": "^1.4.10",
     "validate.js": "^0.13.1"
   },
