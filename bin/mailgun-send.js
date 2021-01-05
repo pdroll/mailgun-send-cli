@@ -14,7 +14,7 @@ const program = new Command();
 program
   .version(packageJson.version)
   .usage('[options]')
-  .description('You will be prompted to enter your Mailgun API Key [https://mailgun.com/app/account/security] and Domain [https://mailgun.com/app/domains] on your first use.')
+  .description('You will be prompted to enter your Mailgun API Key [https://app.mailgun.com/app/account/security/api_keys] and Domain [https://app.mailgun.com/app/sending/domains/] on your first use.')
   .option('-s, --subject <value>', 'Subject of Email')
   .option('-t, --to <value>', 'Email address of recipient of email')
   .option('-f, --from <value>', 'Email address of email sender')
@@ -24,6 +24,7 @@ program
   .option('-T, --text <value>', 'Text to send as body of email. Must specify this or --htmlpath.')
   .option('-H, --htmlpath <value>', 'Path to HTML file to send as email. Must specify this or --text.')
   .option('-R, --reset', 'Reset Mailgun API key and Domain. You will be prompted to enter these again.')
+  .option('-v, --verbose', 'Output more detailed information, such as message id')
   .parse(process.argv);
 
 (async () => {
@@ -41,13 +42,22 @@ program
 
   if (!domain) {
     domain = readlineSync.question('Mailgun Domain (e.g. mg.example.com): ');
+    if (!domain) {
+      console.log('\n\t🚨  Domain is required\n');
+      return false;
+    }
     await keytar.setPassword(packageJson.name, 'domain', domain);
   }
 
   if (!apiKey) {
-    apiKey = readlineSync.question('Mailgun API (e.g. key-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX): ', {
+    apiKey = readlineSync.question('Mailgun API Key (e.g. key-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX): ', {
       hideEchoBack: true,
     });
+
+    if (!apiKey) {
+      console.log('\n\t🚨  API Key is required\n');
+      return false;
+    }
     await keytar.setPassword(packageJson.name, 'apiKey', apiKey);
   }
 
@@ -56,7 +66,7 @@ program
    */
   const mg = new MailgunSend({ apiKey, domain });
 
-  mg.send({
+  return mg.send({
     subject: program.subject,
     to: program.to,
     from: program.from,
@@ -65,6 +75,7 @@ program
     bcc: program.bcc,
     text: program.text,
     htmlpath: program.htmlpath,
+    verbose: program.verbose,
   }).then((msg) => {
     console.log(`\n✅  Success!\n\t${msg}`);
   }).catch((e) => {

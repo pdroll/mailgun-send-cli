@@ -8,10 +8,10 @@ Easily send mail, even HTML emails, from the command line using the Mailgun API.
 npm install mailgun-send-cli -g
 ```
 
-Or if you're using [Yarn](https://yarnpkg.com/):
+Note, this uses [mailgun.js](https://github.com/mailgun/mailgun-js) under the hood, which requires  node.js >= 12.x. If you are using an older version of node, consider using an older version of this package. Version 0.2.0 requires node >=8, while version 0.1.4 requires node >=4.3.2.
 
 ```
-yarn global add mailgun-send-cli
+npm install mailgun-send-cli@0.2.0 -g
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ yarn global add mailgun-send-cli
 mailgun-send [options]
 ```
 
-You will be prompted to enter your Mailgun [API Key](https://mailgun.com/app/account/security) and [domain](https://mailgun.com/app/domains) on your first use. These values will be used on every subsequent call until the `--reset` flag is used to reset them.
+You will be prompted to enter your Mailgun [API Key](https://app.mailgun.com/app/account/security/api_keys) and [domain](https://app.mailgun.com/app/sending/domains/) on your first use. These values will be used on every subsequent call until the `--reset` flag is used to reset them.
 
 ### Examples
 
@@ -70,6 +70,9 @@ Output usage information
 
 #### `-V, --version`
 Output the version number
+
+#### `-v, --verbose`
+Output more detailed information, such as message id
 
 
 ## Troubleshooting
