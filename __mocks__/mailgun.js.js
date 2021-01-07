@@ -7,11 +7,15 @@ function mailgunClientMock({ key, username }) {
   this.messages = {
     create: jest.fn(async () => {
       if (this.apiKey === 'FAIL_UNAUTHORIZED') {
-        throw new Error({ status: 401 });
+        const e = new Error();
+        e.status = 401;
+        throw e;
       }
 
       if (this.apiKey === 'FAIL_NETWORK') {
-        throw new Error({ type: 'EUNAVAILABLE' });
+        const e = new Error();
+        e.type = 'EUNAVAILABLE';
+        throw e;
       }
 
       if (this.apiKey === 'FAIL_OTHER') {
