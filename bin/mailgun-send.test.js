@@ -1,5 +1,6 @@
 const path = require('path');
 const { exec } = require('child_process');
+const { version } = require('../package.json');
 
 const cli = (args) => new Promise((resolve) => {
   exec(`node ${path.resolve('bin/mailgun-send.js')} ${args.join(' ')}`,
@@ -19,4 +20,23 @@ it('prints help text', async () => {
 
   expect(result.code).toBe(0);
   expect(result.stdout).toMatchSnapshot();
+});
+
+it('prints the version from the package.json file', async () => {
+  const result = await cli(['-V']);
+
+  expect(result.code).toBe(0);
+  expect(result.stdout).toMatch(version);
+});
+
+describe('error handling', () => {
+  it('returns error code of 1', async () => {
+    const result = await cli(['-t error']);
+    expect(result.code).toBe(1);
+  });
+
+  it('prints a friendly error message', async () => {
+    const result = await cli(['-W']);
+    expect(result.stdout).toMatch(/🚨  Error:/);
+  });
 });
