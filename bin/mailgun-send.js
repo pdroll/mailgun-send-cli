@@ -1,22 +1,29 @@
 #!/usr/bin/env node
 const runCli = require('../lib/runCli.js');
 
+const { argv } = process;
+
+// Suppress commander error logging,
+// since we're handling them ourselves
+global.console.error = () => {};
+
 const exitOverride = (e) => {
+  // Don't treat help or version commands as errors
   if (['commander.helpDisplayed', 'commander.version'].includes(e.code)) {
-    return true;
+    process.exit(0);
   }
 
   throw new Error(e.message);
 };
 
-const { argv } = process;
-
-runCli({ argv, exitOverride })
-  .then((msg) => {
+(async () => {
+  try {
+    const msg = await runCli({ argv, exitOverride });
     console.log(`\n✅  Success!\n\t${msg}`);
-  }).catch((e) => {
+  } catch (e) {
     // Remove extraneous 'Error:' if present
     const errMsg = `${e.message || e}`.replace(/error:/i, '');
     console.log(`\n🚨  Error:${errMsg}\n`);
     process.exit(1);
-  });
+  }
+})();

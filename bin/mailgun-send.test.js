@@ -15,18 +15,32 @@ const cli = (args) => new Promise((resolve) => {
     });
 });
 
-it('prints help text', async () => {
-  const result = await cli(['-h']);
+describe('help option', () => {
+  it('returns a zero code', async () => {
+    const result = await cli(['-h']);
 
-  expect(result.code).toBe(0);
-  expect(result.stdout).toMatchSnapshot();
+    expect(result.code).toBe(0);
+  });
+
+  it('prints help text', async () => {
+    const result = await cli(['-h']);
+
+    expect(result.stdout).toMatchSnapshot();
+  });
 });
 
-it('prints the version from the package.json file', async () => {
-  const result = await cli(['-V']);
+describe('version option', () => {
+  it('returns a zero code', async () => {
+    const result = await cli(['-V']);
 
-  expect(result.code).toBe(0);
-  expect(result.stdout).toMatch(version);
+    expect(result.code).toBe(0);
+  });
+
+  it('prints the version from the package.json file', async () => {
+    const result = await cli(['-V']);
+
+    expect(result.stdout).toMatch(version);
+  });
 });
 
 describe('error handling', () => {
@@ -35,8 +49,16 @@ describe('error handling', () => {
     expect(result.code).toBe(1);
   });
 
-  it('prints a friendly error message', async () => {
+  it('prints a friendly error message for commander errors', async () => {
     const result = await cli(['-W']);
-    expect(result.stdout).toMatch(/🚨  Error:/);
+    expect(result.stdout).toMatch(/🚨 {2}Error:/);
+    expect(result.stdout).toMatch(/unknown option/i);
+  });
+
+  it('prints a friendly error message for mailgun errors', async () => {
+    const result = await cli(['-t notanemail']);
+    expect(result.stdout).toMatch(/🚨 {2}Error:/);
+    expect(result.stdout).toMatch(/to is not a valid email/i);
+    expect(result.stdout).toMatch(/text or htmlpath must be provided/i);
   });
 });

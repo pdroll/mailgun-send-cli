@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`prints help text 1`] = `
+exports[`help option prints help text 1`] = `
 "Usage: mailgun-send [options]
 
 You will be prompted to enter your Mailgun API Key [https://app.mailgun.com/app/account/security/api_keys] and Domain [https://app.mailgun.com/app/sending/domains/] on your first use.
