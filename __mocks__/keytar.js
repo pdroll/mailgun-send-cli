@@ -1,12 +1,11 @@
-let _data = {};
+let data = {};
 
-const getPassword = jest.fn(async (name, key) => {
-  return (_data[name] && _data[name][key]) ? _data[name][key] : null;
-});
+const getPassword = jest.fn(async (name, key) => (
+  (data[name] && data[name][key]) ? data[name][key] : null));
 
 const setPassword = jest.fn(async (name, key, value) => {
-  _data[name] = _data[name] || {}
-  _data[name][key] = value
+  data[name] = data[name] || {};
+  data[name][key] = value;
 });
 
 const deletePassword = jest.fn(async (name, key) => {
@@ -14,13 +13,15 @@ const deletePassword = jest.fn(async (name, key) => {
     return false;
   }
 
-  delete _data[name][key]
+  delete data[name][key];
 
-  return true
+  return true;
 });
 
-const _clearData = () => {
-  _data = {};
-}
+const clearMockData = () => {
+  data = {};
+};
 
-module.exports = { getPassword, setPassword, deletePassword, _clearData };
+module.exports = {
+  getPassword, setPassword, deletePassword, clearMockData,
+};
