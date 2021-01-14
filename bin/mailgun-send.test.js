@@ -45,7 +45,7 @@ describe('version option', () => {
 
 describe('error handling', () => {
   it('returns error code of 1', async () => {
-    const result = await cli(['-t error']);
+    const result = await cli(['-t']);
     expect(result.code).toBe(1);
   });
 
@@ -53,12 +53,5 @@ describe('error handling', () => {
     const result = await cli(['-W']);
     expect(result.stdout).toMatch(/🚨 {2}Error:/);
     expect(result.stdout).toMatch(/unknown option/i);
-  });
-
-  it('prints a friendly error message for mailgun errors', async () => {
-    const result = await cli(['-t notanemail']);
-    expect(result.stdout).toMatch(/🚨 {2}Error:/);
-    expect(result.stdout).toMatch(/to is not a valid email/i);
-    expect(result.stdout).toMatch(/text or htmlpath must be provided/i);
   });
 });
