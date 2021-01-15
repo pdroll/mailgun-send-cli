@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`help option prints help text 1`] = `
+"Usage: mailgun-send [options]
+
+You will be prompted to enter your Mailgun API Key [https://app.mailgun.com/app/account/security/api_keys] and Domain [https://app.mailgun.com/app/sending/domains/] on your first use.
+
+Options:
+  -V, --version           output the version number
+  -s, --subject <value>   Subject of Email
+  -t, --to <value>        Email address of recipient of email
+  -f, --from <value>      Email address of email sender
+  -r, --reply <value>     ReplyTo email address. Optional
+  -c, --cc <value>        Email address to CC. Optional
+  -b, --bcc <value>       Email address to BCC. Optional
+  -T, --text <value>      Text to send as body of email. Must specify this or
+                          --htmlpath.
+  -H, --htmlpath <value>  Path to HTML file to send as email. Must specify this
+                          or --text.
+  -R, --reset             Reset Mailgun API key and Domain. You will be
+                          prompted to enter these again.
+  -v, --verbose           Output more detailed information, such as message id
+  -h, --help              display help for command
+"
+`;
